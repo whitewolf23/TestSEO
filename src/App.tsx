@@ -1,26 +1,30 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useEffect } from "react";
+import useGTM from "@elgorditosalsero/react-gtm-hook";
+import React from "react";
 
-function App() {
+const MyAwesomeComp = () => {
+  const { sendDataToGTM } = useGTM();
+
+  const handleClick = () =>
+    sendDataToGTM({
+      event: "awesomeButtonClicked",
+      value: "imAwesome",
+    });
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <p>My Awesome Comp</p>
+      <button onClick={handleClick}>My Awesome Button</button>
     </div>
   );
-}
+};
+
+const App = () => {
+  const { init } = useGTM();
+
+  useEffect(() => init({ id: "GTM-NTGCJSR" }), []);
+
+  return <MyAwesomeComp />;
+};
 
 export default App;
